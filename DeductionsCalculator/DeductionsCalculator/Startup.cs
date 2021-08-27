@@ -29,8 +29,8 @@ namespace DeductionsCalculator
         {
             services.AddSingleton<DapperContext>();
 
-            services.AddScoped<IDiscountPackageRepository, DiscountPackageRepository>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddTransient<IDiscountPackageRepository, DiscountPackageRepository>();
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 
             services.AddControllers();
         }
