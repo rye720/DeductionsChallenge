@@ -28,8 +28,6 @@ namespace DAL.Repositories
 
                 using (var connection = CreateConnection())
                 {
-                    connection.Open();
-
                     var result = await connection.QueryFirstOrDefaultAsync<BenefitsPackage>(query, parameters);
                     return result;
                 }
