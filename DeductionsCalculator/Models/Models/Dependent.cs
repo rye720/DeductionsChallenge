@@ -4,9 +4,8 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class Dependent
+    public class Dependent : BaseModel
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+
     }
 }

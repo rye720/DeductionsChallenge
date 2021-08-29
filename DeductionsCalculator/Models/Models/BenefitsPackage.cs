@@ -4,10 +4,8 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class BenefitsPackage
+    public class BenefitsPackage : BaseModel
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
         public decimal YearlyEmployeeCost { get; set; }
         public decimal YearlyDependentCost { get; set; }
         public char DiscountInitial { get; set; }

@@ -4,12 +4,8 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class Employee
+    public class Employee : BaseModel
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-
-
 
         public ICollection<Dependent> Dependents { get; set; }
     }

@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Interfaces;
 using DAL.Repositories;
-using Interfaces.DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Services.Services;
 
 namespace DeductionsCalculator
 {
@@ -27,10 +28,12 @@ namespace DeductionsCalculator
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<DapperContext>();
-
-            services.AddTransient<IDiscountPackageRepository, DiscountPackageRepository>();
+            // repos
+            services.AddTransient<IBenefitsPackageRepository, BenefitsPackageRepository>();
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+
+            // services
+            services.AddTransient<IDeductionsService, DeductionsService>();
 
             services.AddControllers();
         }

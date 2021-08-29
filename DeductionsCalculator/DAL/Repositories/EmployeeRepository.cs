@@ -1,16 +1,38 @@
-﻿using Interfaces.DAL.Repositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using DAL.Interfaces;
+using Models.Models;
 
 namespace DAL.Repositories
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        private readonly DapperContext _context;
-        public EmployeeRepository(DapperContext context)
+
+        public EmployeeRepository()
         {
-            _context = context;
+         
+        }
+
+        public Task<Employee> AddAsync(Employee entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteAsync(Guid Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Employee> GetByIdAsync(Guid Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Employee> UpdateAsync(Employee entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }
