@@ -52,6 +52,7 @@ CREATE TABLE [dbo].[BenefitsPackage](
 	[YearlyDependentCost] [decimal](19,4) NOT NULL,
 	[DiscountInitial] [nvarchar](1) NULL,
 	[DiscountInitialPercentage] [decimal](5,4) NULL,
+	[IsDefault] [bit] NULL,
 	[IsActive] [bit] NOT NULL DEFAULT 1,
 	[CreatedAt] [datetimeoffset] NOT NULL DEFAULT SYSDATETIMEOFFSET(),
 	[UpdatedAt] [datetimeoffset] NOT NULL DEFAULT SYSDATETIMEOFFSET()

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Models.Common;
 using Services.Services;
 
 namespace DeductionsCalculator
@@ -28,6 +29,9 @@ namespace DeductionsCalculator
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // configure app settings
+            services.Configure<ApplicationSettings>(Configuration.GetSection("AppSettings"));
+
             // repos
             services.AddTransient<IBenefitsPackageRepository, BenefitsPackageRepository>();
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();

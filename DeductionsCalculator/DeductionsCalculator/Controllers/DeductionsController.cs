@@ -29,6 +29,13 @@ namespace DeductionsCalculatorApi
             return Ok(result);
         }
 
+        [HttpPost("EmployeeCostPreview")]
+        public async Task<IActionResult> CreateEmployeeAndGetCostPreviewAsync([FromBody] Employee employee, [FromQuery] Guid? benefitsPackageId = null)
+        {
+            var result = await _deductionsService.GetDeductionsPreviewFromNewEmployeeAsync(employee, benefitsPackageId);
+            return Ok(result);
+        }
+
         [HttpPost("Employee")]
         public async Task<IActionResult> CreateEmployeeAsync([FromBody] Employee employee)
         {

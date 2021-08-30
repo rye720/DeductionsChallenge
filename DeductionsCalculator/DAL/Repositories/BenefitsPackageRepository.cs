@@ -22,7 +22,8 @@ namespace DAL.Repositories
                         bp.YearlyEmployeeCost,
                         bp.YearlyDependentCost,
                         bp.DiscountInitial,
-                        bp.DiscountInitialPercentage
+                        bp.DiscountInitialPercentage,
+                        bp.IsDefault
                         FROM BenefitsPackage bp
                         WHERE bp.Id = @Id";
 
@@ -32,6 +33,25 @@ namespace DAL.Repositories
             using (var connection = CreateConnection())
             {
                 var result = await connection.QueryFirstOrDefaultAsync<BenefitsPackage>(query, parameters);
+                return result;
+            }
+        }
+
+        public async Task<BenefitsPackage> GetDefaultBenefitsPackageAsync()
+        {
+            var query = @"SELECT TOP 1 
+                        bp.Id,
+                        bp.YearlyEmployeeCost,
+                        bp.YearlyDependentCost,
+                        bp.DiscountInitial,
+                        bp.DiscountInitialPercentage,
+                        bp.IsDefault
+                        FROM BenefitsPackage bp
+                        WHERE bp.IsDefault = 1";
+
+            using (var connection = CreateConnection())
+            {
+                var result = await connection.QueryFirstOrDefaultAsync<BenefitsPackage>(query);
                 return result;
             }
         }

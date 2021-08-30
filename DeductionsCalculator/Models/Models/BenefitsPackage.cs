@@ -10,5 +10,6 @@ namespace Models.Models
         public decimal YearlyDependentCost { get; set; }
         public char DiscountInitial { get; set; }
         public decimal? DiscountInitialPercentage { get; set; }
+        public bool IsDefault { get; set; }
     }
 }
