@@ -9,32 +9,30 @@ using Models.Models;
 namespace DAL.Repositories
 {
     public class BenefitsPackageRepository : BaseRepository, IBenefitsPackageRepository
-    { 
+    {
 
         public BenefitsPackageRepository(IConfiguration configuration)
-        
-            :base(configuration)
-        { 
+            : base(configuration)
+        {
         }
 
         public async Task<BenefitsPackage> GetByIdAsync(Guid Id)
         {
-            try
-            {
-                var query = "SELECT * FROM BenefitsPackage WHERE Id = @Id";
+            var query = @"SELECT bp.Id,
+                        bp.YearlyEmployeeCost,
+                        bp.YearlyDependentCost,
+                        bp.DiscountInitial,
+                        bp.DiscountInitialPercentage
+                        FROM BenefitsPackage bp
+                        WHERE bp.Id = @Id";
 
-                var parameters = new DynamicParameters();
-                parameters.Add("Id", Id, DbType.Guid);
+            var parameters = new DynamicParameters();
+            parameters.Add("Id", Id, DbType.Guid);
 
-                using (var connection = CreateConnection())
-                {
-                    var result = await connection.QueryFirstOrDefaultAsync<BenefitsPackage>(query, parameters);
-                    return result;
-                }
-            }
-            catch (Exception ex)
+            using (var connection = CreateConnection())
             {
-                throw new Exception(ex.Message, ex);
+                var result = await connection.QueryFirstOrDefaultAsync<BenefitsPackage>(query, parameters);
+                return result;
             }
         }
 

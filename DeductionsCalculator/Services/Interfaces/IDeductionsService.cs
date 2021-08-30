@@ -4,5 +4,7 @@ using Models.Models;
 
 public interface IDeductionsService
 {
-    public Task<BenefitsPackage> GetByIdAsync(Guid Id);
+    public Task<BenefitsPackage> GetBenefitsPackageByIdAsync(Guid Id);
+    public Task<Employee> GetEmployeeWithDependentsByEmployeeIdAsync(Guid Id);
+    Task<Employee> CreateEmployeeAsync(Employee employee);
 }

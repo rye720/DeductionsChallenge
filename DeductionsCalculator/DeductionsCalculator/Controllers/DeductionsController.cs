@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Models.Models;
 
 namespace DeductionsCalculatorApi
 {
@@ -14,12 +15,27 @@ namespace DeductionsCalculatorApi
             _deductionsService = deductionsService;
         }
 
-        [HttpGet()]
-        public async Task<IActionResult> GetBenefitsPackageByGuidAsync([FromQuery] Guid Id)
+        [HttpGet("BenefitsPackage/{Id}")]
+        public async Task<IActionResult> GetBenefitsPackageByGuidAsync(Guid Id)
         {
-            var result = await _deductionsService.GetByIdAsync(Id);
+            var result = await _deductionsService.GetBenefitsPackageByIdAsync(Id);
             return Ok(result);
         }
+
+        [HttpGet("Employee/{Id}")]
+        public async Task<IActionResult> GetEmployeeWithDependentsAsync(Guid Id)
+        {
+            var result = await _deductionsService.GetEmployeeWithDependentsByEmployeeIdAsync(Id);
+            return Ok(result);
+        }
+
+        [HttpPost("Employee")]
+        public async Task<IActionResult> CreateEmployeeAsync([FromBody] Employee employee)
+        {
+            var result = await _deductionsService.CreateEmployeeAsync(employee);
+            return Ok(result);
+        }
+
     }
 }
 

@@ -6,7 +6,6 @@ namespace Models.Models
 {
     public class Employee : BaseModel
     {
-
-        public ICollection<Dependent> Dependents { get; set; }
+        public IList<Dependent> Dependents { get; set; } = new List<Dependent>();
     }
 }

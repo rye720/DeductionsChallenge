@@ -11,17 +11,17 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "https://localhost:5001/Deductions?id=162ec258-55be-4760-be67-d9b16e133000",
+      //"launchBrowser": true,
+      //"launchUrl": "https://localhost:5001/Deductions?id=162ec258-55be-4760-be67-d9b16e133000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "DeductionsCalculator": {
       "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "https://localhost:5001/Deductions?id=162ec258-55be-4760-be67-d9b16e133000",
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      //"launchBrowser": true,
+      //"launchUrl": "https://localhost:5001/Deductions?id=162ec258-55be-4760-be67-d9b16e133000",
+      //"applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

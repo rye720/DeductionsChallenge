@@ -6,6 +6,6 @@ namespace Models.Models
 {
     public class Dependent : BaseModel
     {
-
+        public Guid EmployeeId { get; set; }
     }
 }

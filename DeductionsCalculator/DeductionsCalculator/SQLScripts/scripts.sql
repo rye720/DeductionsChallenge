@@ -15,9 +15,9 @@ GO
 CREATE TABLE [dbo].[Employee](
 	[Id] [uniqueidentifier] NOT NULL DEFAULT NEWID(),
 	[Name] [nvarchar](50) NOT NULL,
-	[IsActive] [bit] NOT NULL DEFAULT 1
-	[CreatedAt] [datetimeoffset(7)] NOT NULL DEFAULT SYSDATETIMEOFFSET()
-	[UpdatedAt] [datetimeoffset(7)] NOT NULL DEFAULT SYSDATETIMEOFFSET()
+	[IsActive] [bit] NOT NULL DEFAULT 1,
+	[CreatedAt] [datetimeoffset] NOT NULL DEFAULT SYSDATETIMEOFFSET(),
+	[UpdatedAt] [datetimeoffset] NOT NULL DEFAULT SYSDATETIMEOFFSET()
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -29,10 +29,10 @@ GO
 CREATE TABLE [dbo].[Dependent](
 	[Id] [uniqueidentifier] NOT NULL DEFAULT NEWID(),
 	[Name] [nvarchar](50) NOT NULL,
-	[EmployeeId] [uniqueidentifier] NOT NULL
-	[IsActive] [bit] NOT NULL DEFAULT 1
-	[CreatedAt] [datetimeoffset(7)] NOT NULL DEFAULT SYSDATETIMEOFFSET()
-	[UpdatedAt] [datetimeoffset(7)] NOT NULL DEFAULT SYSDATETIMEOFFSET()
+	[EmployeeId] [uniqueidentifier] NOT NULL,
+	[IsActive] [bit] NOT NULL DEFAULT 1,
+	[CreatedAt] [datetimeoffset] NOT NULL DEFAULT SYSDATETIMEOFFSET(),
+	[UpdatedAt] [datetimeoffset] NOT NULL DEFAULT SYSDATETIMEOFFSET()
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -51,10 +51,10 @@ CREATE TABLE [dbo].[BenefitsPackage](
 	[YearlyEmployeeCost] [decimal](19,4) NOT NULL,
 	[YearlyDependentCost] [decimal](19,4) NOT NULL,
 	[DiscountInitial] [nvarchar](1) NULL,
-	[DiscountInitialPercentage] [decimal](5,4) NULL
-	[IsActive] [bit] NOT NULL DEFAULT 1
-	[CreatedAt] [datetimeoffset(7)] NOT NULL DEFAULT SYSDATETIMEOFFSET()
-	[UpdatedAt] [datetimeoffset(7)] NOT NULL DEFAULT SYSDATETIMEOFFSET()
+	[DiscountInitialPercentage] [decimal](5,4) NULL,
+	[IsActive] [bit] NOT NULL DEFAULT 1,
+	[CreatedAt] [datetimeoffset] NOT NULL DEFAULT SYSDATETIMEOFFSET(),
+	[UpdatedAt] [datetimeoffset] NOT NULL DEFAULT SYSDATETIMEOFFSET()
 PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
