@@ -32,7 +32,7 @@ namespace DeductionsCalculatorApi
         [HttpPost("EmployeeCostPreview")]
         public async Task<IActionResult> CreateEmployeeAndGetCostPreviewAsync([FromBody] Employee employee, [FromQuery] Guid? benefitsPackageId = null)
         {
-            var result = await _deductionsService.GetDeductionsPreviewFromNewEmployeeAsync(employee, benefitsPackageId);
+            var result = await _deductionsService.CreateNewEmployeeAndGetCostPreviewAsync(employee, benefitsPackageId);
             return Ok(result);
         }
 
@@ -42,7 +42,6 @@ namespace DeductionsCalculatorApi
             var result = await _deductionsService.CreateEmployeeAsync(employee);
             return Ok(result);
         }
-
     }
 }
 

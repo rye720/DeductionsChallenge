@@ -28,6 +28,7 @@ namespace Services.Services
             _appSettings = appSettings.Value;
         }
 
+        #region PublicMethods
         public async Task<BenefitsPackage> GetBenefitsPackageByIdAsync(Guid Id)
         {
             return await _benefitsPackageRepository.GetByIdAsync(Id);
@@ -43,10 +44,9 @@ namespace Services.Services
             return await _employeeRepository.AddAsync(employee);
         }
 
-        public async Task<DeductionsPreviewResourceModel> GetDeductionsPreviewFromNewEmployeeAsync(Employee employee, Guid? benefitsPackageId)
+        public async Task<DeductionsPreviewResourceModel> CreateNewEmployeeAndGetCostPreviewAsync(Employee employee, Guid? benefitsPackageId)
         {
             var newEmployee = await _employeeRepository.AddAsync(employee);
-
             // need to do this better!
             var newEmployeeWithDependents = await _employeeRepository.GetEmployeeWithDependentsByEmployeeIdAsync(newEmployee.Id);
 
@@ -54,40 +54,64 @@ namespace Services.Services
                 await _benefitsPackageRepository.GetByIdAsync(benefitsPackageId.Value) :
                 await _benefitsPackageRepository.GetDefaultBenefitsPackageAsync();
 
-            var employeeBenefitsCost = benefitsPackage.YearlyEmployeeCost;
-
-            // apply benefits discount to employee if applicable
-            if (!string.IsNullOrEmpty(newEmployeeWithDependents.Name) && benefitsPackage.DiscountInitialPercentage != null)
-            {
-                if (newEmployeeWithDependents.Name.ToLowerInvariant().StartsWith(benefitsPackage.DiscountInitial.ToString().ToLowerInvariant()))
-                {
-                    employeeBenefitsCost -= employeeBenefitsCost * benefitsPackage.DiscountInitialPercentage.Value;
-                }
-            }
-
-            // calc employee salary
-            var employeeSalaryCost = _appSettings.PaySettings.PaycheckAmount * _appSettings.PaySettings.PaychecksPerYear;
+            // calc employee cost
+            var employeeCost = GetEmployeeCost(newEmployeeWithDependents, benefitsPackage);
 
             // calc cost of dependents
-            decimal dependentsCost = newEmployeeWithDependents.Dependents.Count * benefitsPackage.YearlyDependentCost;
-            foreach (var dependent in newEmployeeWithDependents.Dependents)
-            {
-                if (!string.IsNullOrEmpty(dependent.Name) && benefitsPackage.DiscountInitialPercentage != null)
-                {
-                    if (dependent.Name.ToLowerInvariant().StartsWith(benefitsPackage.DiscountInitial.ToString().ToLowerInvariant()))
-                    {
-                        dependentsCost -= benefitsPackage.YearlyDependentCost * benefitsPackage.DiscountInitialPercentage.Value;
-                    }
-                }
-            }
+            var dependentsCost = GetDependentsCost(newEmployeeWithDependents.Dependents, benefitsPackage);
 
-            return new DeductionsPreviewResourceModel(newEmployee, employeeSalaryCost + employeeBenefitsCost, dependentsCost);
+            return new DeductionsPreviewResourceModel(newEmployeeWithDependents, employeeCost, dependentsCost);
         }
 
         public async Task<DeductionsPreviewResourceModel> GetDeductionsPreviewByEmployeeIdAsync(Guid Id)
         {
+            // add if time allows, could be helpful
             return new DeductionsPreviewResourceModel();
         }
 
+        #endregion PublicMethods
+
+
+        
+        #region PrivateMethods
+        private decimal GetEmployeeCost(Employee employee, BenefitsPackage benefitsPackage)
+        {
+            var employeeSalaryCost = _appSettings.PaySettings.PaycheckAmount * _appSettings.PaySettings.PaychecksPerYear;
+            var employeeBenefitsCost = benefitsPackage.YearlyEmployeeCost;
+
+            if(IsEligibleForDiscount(employee.Name, benefitsPackage.DiscountInitial))
+            {
+                employeeBenefitsCost -= benefitsPackage.YearlyEmployeeCost * benefitsPackage.DiscountInitialPercentage.Value;
+            }
+
+            return employeeSalaryCost + employeeBenefitsCost;
+        }
+
+        private decimal GetDependentsCost(IList<Dependent> dependents, BenefitsPackage benefitsPackage)
+        {
+            var dependentsCost = dependents.Count * benefitsPackage.YearlyDependentCost;
+
+            foreach (var dependent in dependents)
+            {
+                if (IsEligibleForDiscount(dependent.Name, benefitsPackage.DiscountInitial))
+                {
+                    dependentsCost -= benefitsPackage.YearlyDependentCost * benefitsPackage.DiscountInitialPercentage.Value;
+                }
+            }
+
+            return dependentsCost;
+        }
+
+        private bool IsEligibleForDiscount(string name, char initial)
+        {
+            if(!string.IsNullOrEmpty(name))
+            {
+                return name.ToLowerInvariant().StartsWith(initial.ToString().ToLowerInvariant());
+            }
+
+            return false;
+        }
+
+        #endregion
     }
 }
