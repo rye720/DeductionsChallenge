@@ -4,20 +4,18 @@ import { Employee } from '../models/Employee';
 import { Dependent } from '../models/Dependent';
 
 export class EmployeeForm extends React.Component {
-    getInitialState = () => {
+    clearForm = () => {
         return {
             employeeName: '',
             dependentName: '',
-            dependents: [],
-            items: '',
-            isLoaded: false
+            dependents: []
         }
     };
 
     constructor(props) {
         super(props);
 
-        this.state = this.getInitialState();
+        this.state = this.clearForm();
 
         this.addDependentToList = this.addDependentToList.bind(this);
         this.handleEmployeeChange = this.handleEmployeeChange.bind(this);
@@ -28,7 +26,7 @@ export class EmployeeForm extends React.Component {
     addDependentToList() {
         this.setState({
             dependentName: '',
-            dependents: [...this.state.dependents, this.state.dependentName] //"spread syntax"
+            dependents: [...this.state.dependents, this.state.dependentName]
         });
     }
 
@@ -50,13 +48,16 @@ export class EmployeeForm extends React.Component {
         employee.dependents = dependents;
         addEmployee(employee)
             .then(response => response.json())
-            .then(response => {
-                console.log('Success:', response)
-            });
+            .then(
+                (result) => {
+                    this.props.updateDeductionsPreview(result);
+
+                    console.log('Success:', result);
+                });
 
         event.preventDefault();
 
-        this.setState(this.getInitialState());
+        this.setState(this.clearForm());
     }
 
     render() {
@@ -65,17 +66,23 @@ export class EmployeeForm extends React.Component {
             <form onSubmit={this.handleSubmit}>
                 <label>Employee name:</label>
                 <input type="text" value={this.state.employeeName} onChange={this.handleEmployeeChange} />
-                <input type="submit" value="Submit" />
+                <input disabled={!this.state.employeeName} type="submit" value="Submit" />
                 <br />
                 <label>Dependent name:
                 <input type="text" value={this.state.dependentName} onChange={this.handleDependentChange} />
                 </label>
-                <button type="button" onClick={this.addDependentToList}>Add</button>
+                <button disabled={!this.state.dependentName} type="button" onClick={this.addDependentToList}>Add</button>
+                <br />
+                <ul>
+                    {
+                        this.state.dependents.map(dependent =>
+                            <li>{dependent}</li>
+                        )
+                    }
+                </ul >
 
             </form>
-
-
-
         );
     }
 }
+
