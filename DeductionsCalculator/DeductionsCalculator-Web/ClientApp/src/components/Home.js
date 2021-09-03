@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Header } from './Header';
 import { EmployeeForm } from './EmployeeForm';
 import { DeductionsPreview } from './DeductionsPreview';
 
-export class Home extends React.Component {
+export class Home extends Component {
     constructor(props) {
         super(props);
 
@@ -21,8 +22,9 @@ export class Home extends React.Component {
     render() {
         return (
             <div>
-                <EmployeeForm {...this.state} updateDeductionsPreview={this.updateDeductionsPreview} />
-                <DeductionsPreview {...this.state} />
+                <Header />
+                <EmployeeForm className="centered-container" {...this.state} updateDeductionsPreview={this.updateDeductionsPreview} />
+                <DeductionsPreview className="centered-container" {...this.state} />
             </div>
         );
     }

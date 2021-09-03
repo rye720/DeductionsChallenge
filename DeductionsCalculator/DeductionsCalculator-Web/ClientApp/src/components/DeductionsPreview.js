@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { Avatar, Divider, List, ListItem } from '@material-ui/core';
 
-export class DeductionsPreview extends React.Component {
+export class DeductionsPreview extends Component {
     constructor(props) {
         super(props);
     }
@@ -8,19 +9,25 @@ export class DeductionsPreview extends React.Component {
     render() {
         return this.props.isLoaded && this.props.deductionsPreview && (
             <div>
-                <ul>
-                    <li>Total Cost: {this.props.deductionsPreview.totalCost}</li>
-                    <li>Employee Cost: {this.props.deductionsPreview.employeeCost}</li>
-                    <li>Dependents Cost: {this.props.deductionsPreview.dependentsCost}</li>
-                </ul>
-                <div>
+                <br />
+                <Divider />
+                <div className="employee-result">
                     Employee Name : {this.props.deductionsPreview.employee.name}
-
-                    {this.props.deductionsPreview.employee.dependents.map(dependent =>
-                        <li key={dependent.id}>
-                            {dependent.name}
-                        </li>
-                    )}
+                    <List>
+                        {this.props.deductionsPreview.employee.dependents.map(dependent =>
+                            <ListItem key={dependent.id}>
+                                <Avatar className="small-avatar" />
+                                {dependent.name}
+                            </ListItem>
+                        )}
+                    </List>
+                </div>
+                <div>
+                    <List>
+                        <ListItem>Total Cost: ${this.props.deductionsPreview.totalCost}</ListItem>
+                        <ListItem>Employee Cost: ${this.props.deductionsPreview.employeeCost}</ListItem>
+                        <ListItem>Dependents Cost: ${this.props.deductionsPreview.dependentsCost}</ListItem>
+                    </List>
                 </div>
             </div>
         )

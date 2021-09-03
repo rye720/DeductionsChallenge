@@ -11,7 +11,6 @@ export default class App extends Component {
     render() {
         return (
             <div>
-                <header>Deductions Preview</header>
                 <Layout>
                     <Route exact path='/' component={Home} />
                 </Layout>

@@ -2,8 +2,14 @@ import React, { Component } from 'react';
 import { addEmployee } from '../api/EmployeeService';
 import { Employee } from '../models/Employee';
 import { Dependent } from '../models/Dependent';
+import { Avatar, Button, TextField, List, ListItem, Divider } from '@material-ui/core';
 
-export class EmployeeForm extends React.Component {
+
+
+export class EmployeeForm extends Component {
+
+    validateInputRegex = /^[A-Za-z][A-Za-z ]*$/;
+
     clearForm = () => {
         return {
             employeeName: '',
@@ -52,7 +58,7 @@ export class EmployeeForm extends React.Component {
                 (result) => {
                     this.props.updateDeductionsPreview(result);
 
-                    console.log('Success:', result);
+                    //console.log('Success:', result);
                 });
 
         event.preventDefault();
@@ -61,26 +67,36 @@ export class EmployeeForm extends React.Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <form onSubmit={this.handleSubmit}>
-                <label>Employee name:</label>
-                <input type="text" value={this.state.employeeName} onChange={this.handleEmployeeChange} />
-                <input disabled={!this.state.employeeName} type="submit" value="Submit" />
+
+                <TextField type="text" label="Employee name:" value={this.state.employeeName}
+                    error={this.state.employeeName && !this.state.employeeName.match(this.validateInputRegex)} onChange={this.handleEmployeeChange}
+
+                    helperText={this.state.employeeName && !this.state.employeeName.match(this.validateInputRegex) && 'Name must begin with a letter and not contain numbers or special characters'} />
+
                 <br />
-                <label>Dependent name:
-                <input type="text" value={this.state.dependentName} onChange={this.handleDependentChange} />
-                </label>
-                <button disabled={!this.state.dependentName} type="button" onClick={this.addDependentToList}>Add</button>
-                <br />
-                <ul>
+
+                <div>
+                    <TextField type="text" label="Dependent name:" value={this.state.dependentName}
+                        error={this.state.dependentName && !this.state.dependentName.match(this.validateInputRegex)} onChange={this.handleDependentChange}
+                        helperText={this.state.dependentName && !this.state.dependentName.match(this.validateInputRegex) && 'Name must begin with a letter and not contain numbers or special characters'} />
+
+                    <Button className="add-button" disabled={!this.state.dependentName.match(this.validateInputRegex)}
+                        type="submit" onClick={this.addDependentToList} variant="contained" size="large">Add</Button>
+                </div>
+                <List>
                     {
                         this.state.dependents.map(dependent =>
-                            <li>{dependent}</li>
+                            <ListItem>
+                                <Avatar className="small-avatar" />{dependent}
+                            </ListItem>
                         )
                     }
-                </ul >
+                </List>
 
+                <Button disabled={!this.state.employeeName.match(this.validateInputRegex)}
+                    type="submit" variant="outlined" size="large">Get Costs Preview</Button>
             </form>
         );
     }

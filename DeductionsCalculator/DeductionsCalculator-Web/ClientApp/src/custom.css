@@ -1,14 +1,26 @@
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
+
+.centered-container {
+    display: flex;
+    align-items: center;
 }
 
-code {
-  color: #E01A76;
+.header {
+    text-align: center;
+    background: #1abc9c;
+    color: white;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+.add-button {
+    margin-left: 1vw;
+}
+
+.employee-result {
+    position: absolute;
+    right: 60vw;
+}
+
+.small-avatar {
+    height: 16px;
+    width: 16px;
+    margin-right: 1vw;
 }
