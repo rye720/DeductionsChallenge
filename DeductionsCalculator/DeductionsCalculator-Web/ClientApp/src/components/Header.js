@@ -15,7 +15,7 @@ export class Header extends Component {
                             Deductions Preview Calculator
                         </Typography>
                         <Typography variant="subtitle1" component="div">
-                            Enter Employee and dependent names to get a preview of the costs.
+                            Enter Employee and Dependent names to get a preview of the costs.
                         </Typography>
                     </CardContent>
                 </Card>

@@ -12,6 +12,9 @@ namespace Models.ResourceModels
         public decimal TotalCost { get; set; }
         public Employee Employee { get; set; }
 
+        // use resource models for employee and dependent, bring bool hasDiscount back with dependent model
+        // would be nice to make hasDiscount dependent display something
+
 
 
 
